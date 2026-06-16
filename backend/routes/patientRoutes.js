@@ -2,9 +2,12 @@ const express = require('express');
 const router=express.Router();
 const patientController=require('../controllers/patientController');
 
-router.get('/api/patient',patientController.getPatients);
-router.post('/api/patient',patientController.createPatient);
-router.get('/api/patient/:id',patientController.getPatientById);
-router.put('/api/patient/:id',patientController.updatePatient);
-router.delete('/api/patient/:id',patientController.deletePatient);
+router.get('/',patientController.getPatients);
+router.post('/',patientController.createPatient);
+router.get('/:id',patientController.getPatientById);
+router.put('/:id',patientController.updatePatient);
+router.delete('/:id',patientController.deletePatient);
+// this is the patient route file which defines the routes for patient related operations and maps them to the corresponding controller functions.
+
+
 module.exports=router;

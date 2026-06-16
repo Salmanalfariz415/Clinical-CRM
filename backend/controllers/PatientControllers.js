@@ -53,4 +53,20 @@ async function updatePatient(req,res){
         res.status(500).json({error: 'Internal server error' });
     }
 }
-module.exports={getPatients, createPatient, getPatientById, updatePatient   };
+async function deletePatient(req,res){
+    try{
+        const id=req.params.id;
+        const [result]=db.execute("DELETE FROM patients WHERE id=?",[id]);
+        if(result.affectedRows==0){
+            res.status(400).json({error:'Patient not found'});
+        }
+        else{
+            res.json({message:'Patient deleted successfully'});
+        }
+    }
+    catch(error){
+        console.error('Error deleting patient:', error);
+        res.status(500).json({error: 'Internal server error' });
+    }
+}
+module.exports={getPatients, createPatient, getPatientById, updatePatient, deletePatient};
