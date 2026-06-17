@@ -8,7 +8,7 @@ async function getPatients(req,res){
         res.status(500).json({ error: 'Internal server error' });
     }
 }
-async function createPatient(req,res){
+async function createPatient(req,res    ){
     try{
         const {name, age, gender, address, phone} = req.body;
         const [result]=await db.execute("INSERT INTO patients (name, age, gender, address, phone) VALUES (?, ?, ?, ?, ?)", [name, age, gender, address, phone]);

@@ -1,6 +1,6 @@
 const bcrypt =require("bcryptjs");
 const jwt=require('jsonwebtoken');
-async function createUser(req,res){
+async function createUser(req,res){ 
     try{
         const {username,email,password}=req.body;
         // first check if the user already exists
@@ -9,20 +9,14 @@ async function createUser(req,res){
         if(r.affectedRows>0){
             res.status(400).json({"message":"User already exists"});
         }
-        
+
         const hashedpassword=await bcrypt.hash(password,10);//bcrypt hashing
         const [result]=await db.execute("INSERT INTO users (name,email,password_hash) VALUES (?,?,?)",[username,email,hashedpassword]);
-        // signing a token
+        
         if(result.affectedRows==0){
             res.status(500).json({"message":"User was not created"});
         }
-        const insertId=result.insertId;
-        const [ans]=await db.execute("SELECT * FROM users WHERE id=?",[insertId]);
-        const token=jwt.sign({
-            id:ans[0].id,email:ans[0].email,
-        },
-        process.env.JWT_SECRET);
-        res.status(201).json({token,"message":"User created successfully"});
+        res.status(201).json({"message":"User created successfully"});
     }
     catch(error){
         console.log("Error creating user",error);
@@ -42,7 +36,7 @@ async function loginUser(req,res){
       })}
         //   signing a token
       const token=jwt.sign({id:results[0].id,email:results[0].email},process.env.JWT_SECRET);
-      res.status(201).json({token,"message":"User logged in successfully"});
+      res.status(201).json({token:token,"message":"User logged in successfully"});
         
     }
     catch(error){
