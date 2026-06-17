@@ -11,4 +11,4 @@ router.delete('/:id',verify,patientController.deletePatient);
 // this is the patient route file which defines the routes for patient related operations and maps them to the corresponding controller functions.
 
 
-module.exports=router;
+module.exports=router;  
